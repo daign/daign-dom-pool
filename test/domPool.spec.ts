@@ -100,6 +100,90 @@ describe( 'DomPool', (): void => {
     } );
   } );
 
+  describe( 'getFresh', (): void => {
+    it( 'should return a node of type MockNode', (): void => {
+      // Act
+      const node = DomPool.getFresh( 'div' );
+
+      // Assert
+      expect( node ).to.be.instanceof( MockNode );
+    } );
+
+    it( 'should return a node with correct properties', (): void => {
+      // Arrange
+      const nodeName = 'div';
+      const nameSpace = 'http://www.w3.org/1999/xhtml';
+
+      // Act
+      const node = DomPool.getFresh( nodeName );
+
+      // Assert
+      expect( node.nodeName ).to.equal( nodeName );
+      expect( node.namespaceURI ).to.equal( nameSpace );
+    } );
+
+    it( 'should return a node with correct name space if passed', (): void => {
+      // Arrange
+      const nodeName = 'circle';
+      const nameSpace = 'http://www.w3.org/2000/svg';
+
+      // Act
+      const node = DomPool.getFresh( nodeName, nameSpace );
+
+      // Assert
+      expect( node.nodeName ).to.equal( nodeName );
+      expect( node.namespaceURI ).to.equal( nameSpace );
+    } );
+
+    it( 'should create a new node if category exists but is empty', (): void => {
+      // Arrange
+      const nodeName = 'div';
+
+      // Create node.
+      const node1 = DomPool.get( nodeName );
+      // Return to pool.
+      DomPool.giveBack( node1 );
+      // Remove from pool. Category in pool remains.
+      DomPool.get( nodeName );
+
+      const spy = sinon.spy( document, 'createElement' );
+
+      // Act
+      DomPool.getFresh( nodeName );
+
+      // Assert
+      expect( spy.calledOnce ).to.be.true;
+    } );
+  } );
+
+  describe( 'getSvg', (): void => {
+    it( 'should call get with correct name space', (): void => {
+      // Arrange
+      const spy = sinon.spy( DomPool, 'get' );
+
+      // Act
+      DomPool.getSvg( 'circle' );
+
+      // Assert
+      expect( spy.calledOnce ).to.be.true;
+      expect( spy.calledWith( 'circle', DomPool.svgNameSpace ) ).to.be.true;
+    } );
+  } );
+
+  describe( 'getFreshSvg', (): void => {
+    it( 'should call getFresh with correct name space', (): void => {
+      // Arrange
+      const spy = sinon.spy( DomPool, 'getFresh' );
+
+      // Act
+      DomPool.getFreshSvg( 'circle' );
+
+      // Assert
+      expect( spy.calledOnce ).to.be.true;
+      expect( spy.calledWith( 'circle', DomPool.svgNameSpace ) ).to.be.true;
+    } );
+  } );
+
   // This is for coverage of the abstract class definition.
   describe( 'class definition', (): void => {
     it( 'should be extendable', (): void => {
