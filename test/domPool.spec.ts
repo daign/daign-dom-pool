@@ -3,7 +3,7 @@ import * as sinon from 'sinon';
 
 import { MockDocument, MockNode } from '@daign/mock-dom';
 
-import { DomPool } from '../lib/domPool';
+import { DomPool } from '../lib';
 
 declare var global: any;
 
