@@ -66,6 +66,17 @@ describe( 'WrappedNode', (): void => {
       // Assert
       expect( result.fontSize ).to.equal( '12px' );
     } );
+
+    it( 'should add style to the used attributes', (): void => {
+      // Arrange
+      const node = new WrappedNode( 'div' );
+
+      // Act
+      node.style.fontSize = '12px';
+
+      // Assert
+      expect( ( node as any ).usedAttributes.has( 'style' ) ).to.be.true;
+    } );
   } );
 
   describe( 'set textContent', (): void => {
@@ -189,6 +200,17 @@ describe( 'WrappedNode', (): void => {
       // Assert
       expect( spy.calledOnce ).to.be.true;
     } );
+
+    it( 'should add the attributeName to the used attributes', (): void => {
+      // Arrange
+      const node = new WrappedNode( 'div' );
+
+      // Act
+      node.setAttribute( 'id', 'SomeId' );
+
+      // Assert
+      expect( ( node as any ).usedAttributes.has( 'id' ) ).to.be.true;
+    } );
   } );
 
   describe( 'removeAttribute', (): void => {
@@ -264,6 +286,25 @@ describe( 'WrappedNode', (): void => {
       // Assert
       expect( ( parent as any ).children.length ).to.equal( 0 );
       expect( parent.domNode.children.length ).to.equal( 0 );
+    } );
+
+    it( 'should reset all attributes', (): void => {
+      // Arrange
+      const node = new WrappedNode( 'div' );
+      node.textContent = 'SomeText';
+      node.setAttribute( 'id', 'SomeId' );
+      node.setAttribute( 'color', 'SomeColor' );
+      const spy = sinon.spy( node, 'removeAttribute' );
+
+      // Act
+      node.reset();
+
+      // Assert
+      expect( node.domNode.textContent ).to.equal( '' );
+      expect( spy.calledTwice ).to.be.true;
+      expect( spy.calledWith( 'id' ) ).to.be.true;
+      expect( spy.calledWith( 'color' ) ).to.be.true;
+      expect( ( node as any ).usedAttributes.size ).to.equal( 0 );
     } );
 
     it( 'should remove eventListeners and clear remove callbacks', (): void => {

@@ -16,6 +16,9 @@ export class WrappedNode {
   // References to the child nodes.
   private children: WrappedNode[] = [];
 
+  // The attributes that were set since the last reset.
+  private usedAttributes: Set<string> = new Set<string>();
+
   // Callbacks to remove the event listeners on the node.
   private removeEventListenerCallbacks: ( () => void )[] = [];
 
@@ -36,6 +39,8 @@ export class WrappedNode {
 
   // Get the style of the wrapped node.
   public get style(): any {
+    // Add to used attributes because style was accessed.
+    this.usedAttributes.add( 'style' );
     return this._domNode.style;
   }
 
@@ -81,6 +86,7 @@ export class WrappedNode {
    */
   public setAttribute( attributeName: string, value: string ): void {
     this._domNode.setAttribute( attributeName, value );
+    this.usedAttributes.add( attributeName );
   }
 
   /**
@@ -124,6 +130,13 @@ export class WrappedNode {
     while ( this._domNode.firstChild ) {
       this._domNode.removeChild( this._domNode.firstChild );
     }
+
+    // Reset all attributes.
+    this.textContent = '';
+    this.usedAttributes.forEach( ( attributeName: string ): void => {
+      this.removeAttribute( attributeName );
+    } );
+    this.usedAttributes.clear();
 
     // Remove all event listeners.
     this.removeEventListenerCallbacks.forEach( ( callback: () => void ): void => {
