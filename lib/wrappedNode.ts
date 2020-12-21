@@ -120,7 +120,7 @@ export class WrappedNode {
   }
 
   /**
-   * Remove all child nodes and event listeners from this node.
+   * Remove all child nodes and event listeners from this node, reset all attributes.
    */
   public reset(): void {
     // Clear references to child WrappedNodes.
