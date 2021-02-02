@@ -188,6 +188,24 @@ describe( 'WrappedNode', (): void => {
     } );
   } );
 
+  describe( 'clearChildren', (): void => {
+    it( 'should clear child references', (): void => {
+      // Arrange
+      const parent = new WrappedNode( 'div' );
+      const child1 = new WrappedNode( 'div' );
+      const child2 = new WrappedNode( 'div' );
+      parent.appendChild( child1 );
+      parent.appendChild( child2 );
+
+      // Act
+      parent.clearChildren();
+
+      // Assert
+      expect( ( parent as any ).children.length ).to.equal( 0 );
+      expect( parent.domNode.children.length ).to.equal( 0 );
+    } );
+  } );
+
   describe( 'setAttribute', (): void => {
     it( 'should call setAttribute on the DOM node', (): void => {
       // Arrange

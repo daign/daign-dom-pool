@@ -1,6 +1,6 @@
 {
   "name": "@daign/dom-pool",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Helper for reusing dom nodes.",
   "keywords": [
     "dom",

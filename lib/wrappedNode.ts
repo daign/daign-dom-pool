@@ -80,6 +80,19 @@ export class WrappedNode {
   }
 
   /**
+   * Remove all child nodes.
+   */
+  public clearChildren(): void {
+    // Clear references to child WrappedNodes.
+    this.children = [];
+
+    // Remove child dom nodes from the wrapped dom node.
+    while ( this._domNode.firstChild ) {
+      this._domNode.removeChild( this._domNode.firstChild );
+    }
+  }
+
+  /**
    * Set an attribute of the wrapped node.
    * @param attributeName - The attribute to modify.
    * @param value - The attribute value to set.
@@ -123,13 +136,7 @@ export class WrappedNode {
    * Remove all child nodes and event listeners from this node, reset all attributes.
    */
   public reset(): void {
-    // Clear references to child WrappedNodes.
-    this.children = [];
-
-    // Remove children of wrapped node.
-    while ( this._domNode.firstChild ) {
-      this._domNode.removeChild( this._domNode.firstChild );
-    }
+    this.clearChildren();
 
     // Reset all attributes.
     this.textContent = '';
