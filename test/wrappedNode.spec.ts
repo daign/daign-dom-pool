@@ -25,6 +25,40 @@ describe( 'WrappedNode', (): void => {
     } );
   } );
 
+  describe( 'get children', (): void => {
+    it( 'should get the children', (): void => {
+      // Arrange
+      const node1 = new WrappedNode( 'div' );
+      const node2 = new WrappedNode( 'span' );
+      const node3 = new WrappedNode( 'p' );
+      node1.appendChild( node2 );
+      node1.appendChild( node3 );
+
+      // Act
+      const result = node1.children;
+
+      // Assert
+      expect( result.length ).to.equal( 2 );
+      expect( result[ 0 ].nodeName ).to.equal( 'span' );
+    } );
+
+    it( 'should not allow to modify the internal children array', (): void => {
+      // Arrange
+      const node1 = new WrappedNode( 'div' );
+      const node2 = new WrappedNode( 'span' );
+      node1.appendChild( node2 );
+
+      // Act
+      const result = node1.children;
+      const node3 = new WrappedNode( 'p' );
+      result.push( node3 );
+
+      // Assert
+      expect( result.length ).to.equal( 2 );
+      expect( node1.children.length ).to.equal( 1 );
+    } );
+  } );
+
   describe( 'get nodeName', (): void => {
     it( 'should get the name of the node', (): void => {
       // Arrange

@@ -14,7 +14,7 @@ export class WrappedNode {
   private _nameSpace: string;
 
   // References to the child nodes.
-  private children: WrappedNode[] = [];
+  private _children: WrappedNode[] = [];
 
   // The attributes that were set since the last reset.
   private usedAttributes: Set<string> = new Set<string>();
@@ -25,6 +25,11 @@ export class WrappedNode {
   // Get the DOM node.
   public get domNode(): any {
     return this._domNode;
+  }
+
+  // Get the children.
+  public get children(): WrappedNode[] {
+    return [ ...this._children ];
   }
 
   // Get the name of the node.
@@ -74,7 +79,7 @@ export class WrappedNode {
    * @param childNode - The child node.
    */
   public appendChild( childNode: WrappedNode ): void {
-    this.children.push( childNode );
+    this._children.push( childNode );
     // Also connects the wrapped nodes.
     this._domNode.appendChild( childNode.domNode );
   }
@@ -84,7 +89,7 @@ export class WrappedNode {
    */
   public clearChildren(): void {
     // Clear references to child WrappedNodes.
-    this.children = [];
+    this._children = [];
 
     // Remove child dom nodes from the wrapped dom node.
     while ( this._domNode.firstChild ) {
