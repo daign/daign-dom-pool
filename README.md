@@ -1,8 +1,10 @@
 # daign-dom-pool
 
-[![NPM package][npm]][npm-url]
+[![CI][ci-icon]][ci-url]
+[![Coverage][coveralls-icon]][coveralls-url]
+[![NPM package][npm-icon]][npm-url]
 
-Helper for reusing DOM nodes.
+### Helper for reusing DOM nodes.
 
 For applications that are heavily creating and discarding DOM nodes
 and don't want to relying on garbage collection to keep the performance up.
@@ -62,17 +64,23 @@ expect( WrappedDomPool.countNodes() ).to.equal( 0 );
 
 ## Scripts
 
-#### Build
+```bash
+# Build
+npm run build
 
-    npm run build
+# Run lint analysis
+npm run lint
 
-#### Run lint analysis
+# Run unit tests with code coverage
+npm run test
 
-    npm run lint
+# Get a full lcov report
+npm run coverage
+```
 
-#### Run unit tests with code coverage
-
-    npm run test
-
-[npm]: https://img.shields.io/npm/v/@daign/dom-pool.svg
+[ci-icon]: https://github.com/daign/daign-dom-pool/workflows/CI/badge.svg
+[ci-url]: https://github.com/daign/daign-dom-pool/actions
+[coveralls-icon]: https://coveralls.io/repos/github/daign/daign-dom-pool/badge.svg?branch=main
+[coveralls-url]: https://coveralls.io/github/daign/daign-dom-pool?branch=main
+[npm-icon]: https://img.shields.io/npm/v/@daign/dom-pool.svg
 [npm-url]: https://www.npmjs.com/package/@daign/dom-pool
