@@ -55,6 +55,15 @@ export class WrappedNode {
   }
 
   /**
+   * Check whether no attributes were set and no event listeners were added to the node.
+   * Is not influenced by the presence of child nodes or text content.
+   * @returns The result of the check.
+   */
+  public get isPristine(): boolean {
+    return ( this.removeEventListenerCallbacks.length === 0 && this.usedAttributes.size === 0 );
+  }
+
+  /**
    * Constructor.
    * @param nodeName - The name of the node.
    * @param nameSpace - The name space of the node. Optional.

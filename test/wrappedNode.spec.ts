@@ -127,6 +127,57 @@ describe( 'WrappedNode', (): void => {
     } );
   } );
 
+  describe( 'get isPristine', (): void => {
+    it( 'should return true for an unchanged node', (): void => {
+      // Arrange
+      const node = new WrappedNode( 'div' );
+
+      // Act
+      const result = node.isPristine;
+
+      // Assert
+      expect( result ).to.be.true;
+    } );
+
+    it( 'should return false if an attribute has been set', (): void => {
+      // Arrange
+      const node = new WrappedNode( 'div' );
+      node.setAttribute( 'id', 'SomeId' );
+
+      // Act
+      const result = node.isPristine;
+
+      // Assert
+      expect( result ).to.be.false;
+    } );
+
+    it( 'should return false if an event listener was added', (): void => {
+      // Arrange
+      const node = new WrappedNode( 'div' );
+      const listener = (): void => {};
+      node.addEventListener( 'mousedown', listener, false );
+
+      // Act
+      const result = node.isPristine;
+
+      // Assert
+      expect( result ).to.be.false;
+    } );
+
+    it( 'should return true even if a child was added', (): void => {
+      // Arrange
+      const node = new WrappedNode( 'div' );
+      const child = new WrappedNode( 'span' );
+      node.appendChild( child );
+
+      // Act
+      const result = node.isPristine;
+
+      // Assert
+      expect( result ).to.be.true;
+    } );
+  } );
+
   describe( 'constructor', (): void => {
     it( 'should create a node of type MockNode', (): void => {
       // Act
