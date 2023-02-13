@@ -1,4 +1,4 @@
-const xhtmlNameSpace = 'http://www.w3.org/1999/xhtml';
+const xhtmlNamespace = 'http://www.w3.org/1999/xhtml';
 
 /**
  * Class that describes a wrapped DOM node.
@@ -10,8 +10,8 @@ export class WrappedNode {
   // The name of the node.
   private _nodeName: string;
 
-  // The name space of the node.
-  private _nameSpace: string;
+  // The namespace of the node.
+  private _namespace: string;
 
   // References to the child nodes.
   private _children: WrappedNode[] = [];
@@ -37,9 +37,9 @@ export class WrappedNode {
     return this._nodeName;
   }
 
-  // Get the name space of the node.
-  public get nameSpace(): string {
-    return this._nameSpace;
+  // Get the namespace of the node.
+  public get namespace(): string {
+    return this._namespace;
   }
 
   // Get the style of the wrapped node.
@@ -66,19 +66,19 @@ export class WrappedNode {
   /**
    * Constructor.
    * @param nodeName - The name of the node.
-   * @param nameSpace - The name space of the node. Optional.
+   * @param namespace - The namespace of the node. Optional.
    */
-  public constructor( nodeName: string, nameSpace?: string ) {
+  public constructor( nodeName: string, namespace?: string ) {
     this._nodeName = nodeName;
 
-    // Without a specified name space the XHTML name space is used for identification.
-    this._nameSpace = nameSpace ? nameSpace : xhtmlNameSpace;
+    // Without a specified namespace the XHTML namespace is used for identification.
+    this._namespace = namespace ? namespace : xhtmlNamespace;
 
-    if ( nameSpace ) {
-      // Create a new node with name space.
-      this._domNode = document.createElementNS( nameSpace, nodeName );
+    if ( namespace ) {
+      // Create a new node with namespace.
+      this._domNode = document.createElementNS( namespace, nodeName );
     } else {
-      // Create a new node without name space.
+      // Create a new node without namespace.
       this._domNode = document.createElement( nodeName );
     }
   }
@@ -113,6 +113,19 @@ export class WrappedNode {
    */
   public setAttribute( attributeName: string, value: string ): void {
     this._domNode.setAttribute( attributeName, value );
+    this.usedAttributes.add( attributeName );
+  }
+
+  /**
+   * Set a namespace attribute of the wrapped node.
+   * @param namespace - The namespace of the attribute.
+   * @param attributeName - The attribute to modify.
+   * @param value - The attribute value to set.
+   */
+  public setAttributeNS( namespace: string, attributeName: string, value: string ): void {
+    this._domNode.setAttributeNS( namespace, attributeName, value );
+    /* Namespace is not saved in used attributes, because the attribute can be removed without
+     * namespace. */
     this.usedAttributes.add( attributeName );
   }
 

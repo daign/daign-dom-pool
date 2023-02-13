@@ -4,18 +4,18 @@ import { WrappedNode } from './wrappedNode';
  * Static class for reusing wrapped dom nodes.
  */
 export abstract class WrappedDomPool {
-  public static readonly svgNameSpace: string = 'http://www.w3.org/2000/svg';
-  public static readonly xhtmlNameSpace: string = 'http://www.w3.org/1999/xhtml';
+  public static readonly svgNamespace: string = 'http://www.w3.org/2000/svg';
+  public static readonly xhtmlNamespace: string = 'http://www.w3.org/1999/xhtml';
 
   /**
    * Get a wrapped node object, either reusing one from the pool or creating a new one.
    * @param nodeName - The name of the node.
-   * @param nameSpace - The name space. Optional.
+   * @param namespace - The namespace. Optional.
    * @returns A wrapped node object.
    */
-  public static get( nodeName: string, nameSpace?: string ): WrappedNode {
+  public static get( nodeName: string, namespace?: string ): WrappedNode {
     const key = (
-      nameSpace ? `${nameSpace}/${nodeName}` : `${WrappedDomPool.xhtmlNameSpace}/${nodeName}`
+      namespace ? `${namespace}/${nodeName}` : `${WrappedDomPool.xhtmlNamespace}/${nodeName}`
     );
 
     // Reuse a node from the pool if possible.
@@ -28,28 +28,28 @@ export abstract class WrappedDomPool {
       }
     }
 
-    // Create a new wrapped node with name space.
-    if ( nameSpace ) {
-      return new WrappedNode( nodeName, nameSpace );
+    // Create a new wrapped node with namespace.
+    if ( namespace ) {
+      return new WrappedNode( nodeName, namespace );
     }
 
-    // Create a new wrapped node without name space.
+    // Create a new wrapped node without namespace.
     return new WrappedNode( nodeName );
   }
 
   /**
    * Get a wrapped node object, always creating a new one.
    * @param nodeName - The name of the node.
-   * @param nameSpace - The name space. Optional.
+   * @param namespace - The namespace. Optional.
    * @returns A wrapped node object.
    */
-  public static getFresh( nodeName: string, nameSpace?: string ): WrappedNode {
-    // Create a new wrapped node with name space.
-    if ( nameSpace ) {
-      return new WrappedNode( nodeName, nameSpace );
+  public static getFresh( nodeName: string, namespace?: string ): WrappedNode {
+    // Create a new wrapped node with namespace.
+    if ( namespace ) {
+      return new WrappedNode( nodeName, namespace );
     }
 
-    // Create a new wrapped node without name space.
+    // Create a new wrapped node without namespace.
     return new WrappedNode( nodeName );
   }
 
@@ -59,7 +59,7 @@ export abstract class WrappedDomPool {
    * @returns A wrapped node object.
    */
   public static getSvg( nodeName: string ): WrappedNode {
-    return WrappedDomPool.get( nodeName, WrappedDomPool.svgNameSpace );
+    return WrappedDomPool.get( nodeName, WrappedDomPool.svgNamespace );
   }
 
   /**
@@ -68,7 +68,7 @@ export abstract class WrappedDomPool {
    * @returns A wrapped node object.
    */
   public static getFreshSvg( nodeName: string ): WrappedNode {
-    return WrappedDomPool.getFresh( nodeName, WrappedDomPool.svgNameSpace );
+    return WrappedDomPool.getFresh( nodeName, WrappedDomPool.svgNamespace );
   }
 
   /**
@@ -77,8 +77,8 @@ export abstract class WrappedDomPool {
    */
   public static giveBack( node: WrappedNode ): void {
     const nodeName = node.nodeName;
-    const nameSpace = node.nameSpace;
-    const key = `${nameSpace}/${nodeName}`;
+    const namespace = node.namespace;
+    const key = `${namespace}/${nodeName}`;
 
     // Create a new pool category if necessary.
     if ( this.pool[ key ] === undefined ) {

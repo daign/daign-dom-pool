@@ -166,7 +166,7 @@ describe( 'DomPool', (): void => {
 
       // Assert
       expect( spy.calledOnce ).to.be.true;
-      expect( spy.calledWith( 'circle', DomPool.svgNameSpace ) ).to.be.true;
+      expect( spy.calledWith( 'circle', DomPool.svgNamespace ) ).to.be.true;
     } );
   } );
 
@@ -180,7 +180,7 @@ describe( 'DomPool', (): void => {
 
       // Assert
       expect( spy.calledOnce ).to.be.true;
-      expect( spy.calledWith( 'circle', DomPool.svgNameSpace ) ).to.be.true;
+      expect( spy.calledWith( 'circle', DomPool.svgNamespace ) ).to.be.true;
     } );
   } );
 

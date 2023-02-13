@@ -33,7 +33,7 @@ describe( 'WrappedDomPool', (): void => {
 
       // Assert
       expect( node.nodeName ).to.equal( nodeName );
-      expect( node.nameSpace ).to.equal( nameSpace );
+      expect( node.namespace ).to.equal( nameSpace );
     } );
 
     it( 'should return a node with correct name space if passed', (): void => {
@@ -46,7 +46,7 @@ describe( 'WrappedDomPool', (): void => {
 
       // Assert
       expect( node.nodeName ).to.equal( nodeName );
-      expect( node.nameSpace ).to.equal( nameSpace );
+      expect( node.namespace ).to.equal( nameSpace );
     } );
 
     it( 'should return a node that was previously added to the pool', (): void => {
@@ -121,7 +121,7 @@ describe( 'WrappedDomPool', (): void => {
 
       // Assert
       expect( node.nodeName ).to.equal( nodeName );
-      expect( node.nameSpace ).to.equal( nameSpace );
+      expect( node.namespace ).to.equal( nameSpace );
     } );
 
     it( 'should return a node with correct name space if passed', (): void => {
@@ -134,7 +134,7 @@ describe( 'WrappedDomPool', (): void => {
 
       // Assert
       expect( node.nodeName ).to.equal( nodeName );
-      expect( node.nameSpace ).to.equal( nameSpace );
+      expect( node.namespace ).to.equal( nameSpace );
     } );
 
     it( 'should create a new node even if there is one in the pool', (): void => {
@@ -166,7 +166,7 @@ describe( 'WrappedDomPool', (): void => {
 
       // Assert
       expect( spy.calledOnce ).to.be.true;
-      expect( spy.calledWith( 'circle', WrappedDomPool.svgNameSpace ) ).to.be.true;
+      expect( spy.calledWith( 'circle', WrappedDomPool.svgNamespace ) ).to.be.true;
     } );
   } );
 
@@ -180,7 +180,7 @@ describe( 'WrappedDomPool', (): void => {
 
       // Assert
       expect( spy.calledOnce ).to.be.true;
-      expect( spy.calledWith( 'circle', WrappedDomPool.svgNameSpace ) ).to.be.true;
+      expect( spy.calledWith( 'circle', WrappedDomPool.svgNamespace ) ).to.be.true;
     } );
   } );
 

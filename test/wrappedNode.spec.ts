@@ -81,7 +81,7 @@ describe( 'WrappedNode', (): void => {
       const node = new WrappedNode( nodeName, nameSpace );
 
       // Act
-      const result = node.nameSpace;
+      const result = node.namespace;
 
       // Assert
       expect( result ).to.equal( nameSpace );
@@ -197,7 +197,7 @@ describe( 'WrappedNode', (): void => {
 
       // Assert
       expect( node.nodeName ).to.equal( nodeName );
-      expect( node.nameSpace ).to.equal( nameSpace );
+      expect( node.namespace ).to.equal( nameSpace );
     } );
 
     it( 'should set the XHTML name space if no name space is specified', (): void => {
@@ -209,7 +209,7 @@ describe( 'WrappedNode', (): void => {
       const node = new WrappedNode( nodeName );
 
       // Assert
-      expect( node.nameSpace ).to.equal( nameSpace );
+      expect( node.namespace ).to.equal( nameSpace );
     } );
 
     it( 'should call createElement if no name space is specified', (): void => {
@@ -310,6 +310,31 @@ describe( 'WrappedNode', (): void => {
 
       // Act
       node.setAttribute( 'id', 'SomeId' );
+
+      // Assert
+      expect( ( node as any ).usedAttributes.has( 'id' ) ).to.be.true;
+    } );
+  } );
+
+  describe( 'setAttributeNS', (): void => {
+    it( 'should call setAttributeNS on the DOM node', (): void => {
+      // Arrange
+      const node = new WrappedNode( 'div' );
+      const spy = sinon.spy( node.domNode, 'setAttributeNS' );
+
+      // Act
+      node.setAttributeNS( 'namespace', 'id', 'SomeId' );
+
+      // Assert
+      expect( spy.calledOnce ).to.be.true;
+    } );
+
+    it( 'should add the attributeName to the used attributes', (): void => {
+      // Arrange
+      const node = new WrappedNode( 'div' );
+
+      // Act
+      node.setAttributeNS( 'namespace', 'id', 'SomeId' );
 
       // Assert
       expect( ( node as any ).usedAttributes.has( 'id' ) ).to.be.true;
