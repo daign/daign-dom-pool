@@ -6,6 +6,7 @@ import { WrappedNode } from './wrappedNode';
 export abstract class WrappedDomPool {
   public static readonly svgNamespace: string = 'http://www.w3.org/2000/svg';
   public static readonly xhtmlNamespace: string = 'http://www.w3.org/1999/xhtml';
+  public static readonly xlinkNamespace: string = 'http://www.w3.org/1999/xlink';
 
   /**
    * Get a wrapped node object, either reusing one from the pool or creating a new one.
